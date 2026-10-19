@@ -4,6 +4,8 @@ A complete inventory workspace for a Database Systems Lab: React, Vite, Tailwind
 
 The interface includes a responsive sidebar, light/dark appearance, login, product catalogue, search/filter/sort/pagination, category and supplier directories, atomic stock-in/out operations, movement history, live dashboard, seven reports, CSV exports, admin team-account creation, validation, confirmation dialogs and connection errors.
 
+**Hosted college demo:** see [H2 demo deployment](docs/DEMO_DEPLOYMENT.md). Its resettable H2 data is separate from the Oracle JDBC application documented below.
+
 ## Repository
 
 For a fresh clone, install the software in [Windows setup](docs/WINDOWS_SETUP.md), provision a dedicated user in your own Oracle PDB with the [SQL scripts](database/), then follow the startup steps below. The `XEPDB1` defaults describe a local Oracle XE example; use your own PDB service if it differs. The [JDBC guide](docs/JDBC.md) shows the Spring integration and a standalone `DriverManager` demonstration for lab inspection.

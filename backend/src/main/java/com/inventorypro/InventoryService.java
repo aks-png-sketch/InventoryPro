@@ -105,7 +105,7 @@ public class InventoryService {
         Map<String,Object> result=new LinkedHashMap<>(one("SELECT COUNT(*) total_products,NVL(SUM(unit_price*quantity),0) inventory_value,NVL(SUM(CASE WHEN quantity>0 AND quantity<=reorder_level THEN 1 ELSE 0 END),0) low_stock,NVL(SUM(CASE WHEN quantity=0 THEN 1 ELSE 0 END),0) out_of_stock FROM products"));
         result.put("totalSuppliers",jdbc.queryForObject("SELECT COUNT(*) FROM suppliers",Long.class));
         result.put("categories",rows("SELECT c.name,COUNT(p.id) product_count,NVL(SUM(p.quantity*p.unit_price),0) inventory_value FROM categories c LEFT JOIN products p ON c.id=p.category_id GROUP BY c.name ORDER BY c.name"));
-        result.put("chart",rows("SELECT TO_CHAR(created_at,'YYYY-MM-DD') day,SUM(CASE WHEN movement_type='IN' THEN quantity ELSE 0 END) stock_in,SUM(CASE WHEN movement_type='OUT' THEN quantity ELSE 0 END) stock_out FROM stock_movements WHERE created_at>=TRUNC(SYSDATE)-13 GROUP BY TO_CHAR(created_at,'YYYY-MM-DD') ORDER BY day"));
+        result.put("chart",rows("SELECT TO_CHAR(created_at,'YYYY-MM-DD') AS \"DAY\",SUM(CASE WHEN movement_type='IN' THEN quantity ELSE 0 END) stock_in,SUM(CASE WHEN movement_type='OUT' THEN quantity ELSE 0 END) stock_out FROM stock_movements WHERE created_at>=? GROUP BY TO_CHAR(created_at,'YYYY-MM-DD') ORDER BY \"DAY\"", Timestamp.valueOf(LocalDate.now().minusDays(13).atStartOfDay())));
         result.put("recent",rows(MOVEMENTS+" ORDER BY m.created_at DESC,m.id DESC FETCH FIRST 6 ROWS ONLY"));
         result.put("activity",rows("SELECT id,name,sku,quantity,updated_at FROM products ORDER BY updated_at DESC,id DESC FETCH FIRST 5 ROWS ONLY"));
         return result;

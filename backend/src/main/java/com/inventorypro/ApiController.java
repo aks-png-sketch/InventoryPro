@@ -10,6 +10,7 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.*;
+import org.springframework.core.env.Environment;
 import java.time.LocalDate;
 import java.util.*;
 import static com.inventorypro.Models.*;
@@ -18,9 +19,9 @@ import static com.inventorypro.Models.*;
 @RequestMapping("/api")
 @Validated
 public class ApiController {
-    private final InventoryService service; private final JdbcTemplate jdbc; private final PasswordEncoder encoder;
-    public ApiController(InventoryService service,JdbcTemplate jdbc,PasswordEncoder encoder) { this.service=service;this.jdbc=jdbc;this.encoder=encoder; }
-    @GetMapping("/health") public Map<String,Object> health() { jdbc.queryForObject("SELECT 1 FROM dual",Integer.class); return Map.of("status","UP","database","Oracle"); }
+    private final InventoryService service; private final JdbcTemplate jdbc; private final PasswordEncoder encoder; private final Environment env;
+    public ApiController(InventoryService service,JdbcTemplate jdbc,PasswordEncoder encoder,Environment env) { this.service=service;this.jdbc=jdbc;this.encoder=encoder;this.env=env; }
+    @GetMapping("/health") public Map<String,Object> health() { jdbc.queryForObject("SELECT 1 FROM dual",Integer.class); return Map.of("status","UP","database",env.matchesProfiles("demo") ? "H2 demo" : "Oracle"); }
     @GetMapping("/auth/csrf") public Map<String,String> csrf(CsrfToken token) { return Map.of("token",token.getToken(),"headerName",token.getHeaderName()); }
     @GetMapping("/auth/me") public Map<String,Object> me(Authentication auth) { return Map.of("username",auth.getName(),"role",auth.getAuthorities().iterator().next().getAuthority().replace("ROLE_","")); }
     @PostMapping("/users") @ResponseStatus(HttpStatus.CREATED) @PreAuthorize("hasRole('ADMIN')")

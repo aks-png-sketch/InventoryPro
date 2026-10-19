@@ -1,0 +1,9 @@
+# Public H2 demo
+
+The public college demonstration runs React and Spring Boot in one Render free Docker web service (`Dockerfile.demo`) with an **in-memory H2 database**. It does **not** connect to Oracle. The original Dockerfile, Oracle JDBC configuration, Oracle SQL scripts and local Oracle data remain intact. The demo schema and sample records are recreated on service restart or idle wake, so changes made by visitors are temporary.
+
+The demo profile requires `SPRING_PROFILES_ACTIVE=demo` and a secret `DEMO_ADMIN_PASSWORD` environment variable (12–72 UTF-8 bytes). It accepts optional `DEMO_ADMIN_USERNAME` (default `demo-admin`). Use `SESSION_COOKIE_SECURE=true` and `FORWARD_HEADERS_STRATEGY=framework` on Render's HTTPS endpoint. Never put the demo password in Git, an image, or documentation. The account password is BCrypt-hashed when H2 starts. The login page and workspace display H2 demo labels because `Dockerfile.demo` builds with `VITE_DEMO_MODE=true`.
+
+The sample database starts with three categories, one supplier, three products (in-stock, low-stock and out-of-stock) and two opening movements. Admins can add products, suppliers and categories; all signed-in users can record stock operations and inspect dashboard/reports. `/api/health` identifies the database as `H2 demo` and checks it. This demo is suitable for short inspection, not persistent record storage.
+
+Render's [free web service](https://render.com/docs/free) supplies HTTPS with no card requirement but sleeps after 15 idle minutes and may need about a minute to wake. Its filesystem is ephemeral. Other free services in the same workspace share the monthly free instance-hour allowance. If the service is suspended for usage limits, wait for the next period or choose a different free account; do not upgrade without approval.

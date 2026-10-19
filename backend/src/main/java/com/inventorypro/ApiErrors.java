@@ -6,10 +6,13 @@ import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.core.env.Environment;
 import java.util.*;
 
 @RestControllerAdvice
 public class ApiErrors {
+    private final Environment env;
+    public ApiErrors(Environment env) { this.env=env; }
     @ExceptionHandler(ResponseStatusException.class) ResponseEntity<?> status(ResponseStatusException e) { return ResponseEntity.status(e.getStatusCode()).body(Map.of("message",Objects.toString(e.getReason(),"Request failed"))); }
     @ExceptionHandler(MethodArgumentNotValidException.class) ResponseEntity<?> invalid(MethodArgumentNotValidException e) {
         Map<String,String> fields=new LinkedHashMap<>(); e.getBindingResult().getFieldErrors().forEach(f -> fields.put(f.getField(),f.getDefaultMessage()));
@@ -22,5 +25,5 @@ public class ApiErrors {
         return ResponseEntity.status(409).body(Map.of("message",message));
     }
     @ExceptionHandler({CannotAcquireLockException.class,org.springframework.transaction.TransactionTimedOutException.class}) ResponseEntity<?> lock(Exception e) { return ResponseEntity.status(409).body(Map.of("message","Inventory is being updated. Please retry.")); }
-    @ExceptionHandler(DataAccessException.class) ResponseEntity<?> database(DataAccessException e) { return ResponseEntity.status(503).body(Map.of("message","Oracle database is unavailable or not initialized. Check connection settings and schema.")); }
+    @ExceptionHandler(DataAccessException.class) ResponseEntity<?> database(DataAccessException e) { return ResponseEntity.status(503).body(Map.of("message",env.matchesProfiles("demo") ? "Demo database is unavailable. Please retry shortly." : "Oracle database is unavailable or not initialized. Check connection settings and schema.")); }
 }
