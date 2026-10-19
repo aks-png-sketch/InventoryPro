@@ -1,0 +1,24 @@
+FROM node:24-alpine AS frontend
+WORKDIR /build/frontend
+COPY frontend/package*.json ./
+RUN npm ci --no-audit --no-fund
+COPY frontend/ ./
+ARG VITE_API_BASE_URL=/api
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+RUN npm run build
+
+FROM maven:3.9.11-eclipse-temurin-21 AS backend
+WORKDIR /build/backend
+COPY backend/pom.xml ./
+COPY backend/src ./src
+COPY --from=frontend /build/frontend/dist/ ./src/main/resources/static/
+RUN mvn -B -ntp package -DskipTests
+
+FROM eclipse-temurin:21-jre-jammy
+WORKDIR /app
+RUN groupadd --gid 10001 inventory && useradd --uid 10001 --gid inventory --no-create-home inventory
+COPY --from=backend /build/backend/target/inventorypro-1.0.0.jar /app/inventorypro.jar
+USER 10001:10001
+ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=60.0 -XX:+ExitOnOutOfMemoryError"
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/app/inventorypro.jar"]

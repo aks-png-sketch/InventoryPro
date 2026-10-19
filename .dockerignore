@@ -1,0 +1,16 @@
+.git
+.tools
+**/node_modules
+**/.npm-cache
+**/target
+**/dist
+**/.env
+**/.env.*
+**/*.log
+**/__pycache__
+**/*.p12
+**/*.sso
+**/*.jks
+**/*.pem
+**/*.key
+**/[Ww]allet*
