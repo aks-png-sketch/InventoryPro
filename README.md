@@ -4,7 +4,7 @@ A complete inventory workspace for a Database Systems Lab: React, Vite, Tailwind
 
 The interface includes a responsive sidebar, light/dark appearance, login, product catalogue, search/filter/sort/pagination, category and supplier directories, atomic stock-in/out operations, movement history, live dashboard, seven reports, CSV exports, admin team-account creation, validation, confirmation dialogs and connection errors.
 
-**Hosted college demo:** see [H2 demo deployment](docs/DEMO_DEPLOYMENT.md). Its resettable H2 data is separate from the Oracle JDBC application documented below.
+**Hosted college demo:** [Open InventoryPro](https://inventorypro-college-demo.onrender.com/). It uses resettable H2 data, separate from the Oracle JDBC application documented below. See [H2 demo deployment](docs/DEMO_DEPLOYMENT.md).
 
 ## Repository
 

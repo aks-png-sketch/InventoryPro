@@ -1,5 +1,7 @@
 # Public H2 demo
 
+Website: <https://inventorypro-college-demo.onrender.com/>. Health: <https://inventorypro-college-demo.onrender.com/api/health>. The demo admin username is `demo-admin`; its generated password is a Render environment secret and must be shared privately with the professor. It is never stored in Git.
+
 The public college demonstration runs React and Spring Boot in one Render free Docker web service (`Dockerfile.demo`) with an **in-memory H2 database**. It does **not** connect to Oracle. The original Dockerfile, Oracle JDBC configuration, Oracle SQL scripts and local Oracle data remain intact. The demo schema and sample records are recreated on service restart or idle wake, so changes made by visitors are temporary.
 
 The demo profile requires `SPRING_PROFILES_ACTIVE=demo` and a secret `DEMO_ADMIN_PASSWORD` environment variable (12–72 UTF-8 bytes). It accepts optional `DEMO_ADMIN_USERNAME` (default `demo-admin`). Use `SESSION_COOKIE_SECURE=true` and `FORWARD_HEADERS_STRATEGY=framework` on Render's HTTPS endpoint. Never put the demo password in Git, an image, or documentation. The account password is BCrypt-hashed when H2 starts. The login page and workspace display H2 demo labels because `Dockerfile.demo` builds with `VITE_DEMO_MODE=true`.
