@@ -12,7 +12,9 @@ spring:
     hikari:
       initialization-fail-timeout: -1
       connection-timeout: 5000
-      maximum-pool-size: 10
+      maximum-pool-size: ${DB_POOL_MAX:3}
+      minimum-idle: ${DB_POOL_MIN_IDLE:0}
+      idle-timeout: 60000
   sql:
     init:
       mode: never

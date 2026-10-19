@@ -1,6 +1,6 @@
 # InventoryPro
 
-A complete local inventory workspace for a Database Systems Lab: React, Vite, Tailwind CSS, Recharts, Java 21, Spring Boot, Spring Security and **Oracle Database through JDBC**. There is no replacement database and no fabricated dashboard data.
+A complete inventory workspace for a Database Systems Lab: React, Vite, Tailwind CSS, Recharts, Java 21, Spring Boot, Spring Security and **Oracle Database through JDBC**. There is no replacement database and no fabricated dashboard data. The combined frontend/backend Docker build is prepared; a public live deployment still needs a remotely hosted Oracle schema.
 
 The interface includes a responsive sidebar, light/dark appearance, login, product catalogue, search/filter/sort/pagination, category and supplier directories, atomic stock-in/out operations, movement history, live dashboard, seven reports, CSV exports, admin team-account creation, validation, confirmation dialogs and connection errors.
 
@@ -77,7 +77,7 @@ $env:DB_SERVICE = 'XEPDB1'
 $env:DB_USERNAME = 'INVENTORY_APP'
 ```
 
-The startup helper asks for secrets securely and passes them only in the child process environment. `.env.example` is documentation, **not automatically loaded** by Spring or PowerShell. No production password is stored in the repository. `SESSION_COOKIE_SECURE` defaults to true; the local startup helper sets false only for loopback HTTP. Use HTTPS and leave it true in a production configuration. No deployment is part of this project setup.
+The startup helper asks for secrets securely and passes them only in the child process environment. `.env.example` is documentation, **not automatically loaded** by Spring or PowerShell. No production password is stored in the repository. `SESSION_COOKIE_SECURE` defaults to true; the local startup helper sets false only for loopback HTTP. Use HTTPS and leave it true in a production configuration. See [deployment readiness](docs/DEPLOYMENT.md) and [no-card hosting options](docs/NO_CARD_DEPLOYMENT.md).
 
 Spring uses Oracle's official `com.oracle.database.jdbc:ojdbc11:23.26.3.0.0` dependency, `JdbcTemplate` and Spring transactions. No JPA/Hibernate. See [JDBC guide](docs/JDBC.md) for the direct `DriverManager` demonstration and resource handling.
 
@@ -115,6 +115,7 @@ Oracle integration tests require `ORACLE_TESTS=true` and DB environment variable
 - [Recorded verification results and limitations](docs/VERIFICATION.md)
 - [Comprehensive QA audit and current test totals](docs/QA_AUDIT.md)
 - [Deployment architecture, environment variables and release gates](docs/DEPLOYMENT.md)
+- [No-card Oracle hosting options and current blocker](docs/NO_CARD_DEPLOYMENT.md)
 - [GitHub publishing review and commands](docs/GITHUB.md)
 
-This is a local university project. No GitHub push or deployment has been performed. Screenshots are included only if actually captured; none have been fabricated.
+The source is published on GitHub. The Oracle-backed application has not yet been publicly deployed. Screenshots are included only if actually captured; none have been fabricated.
