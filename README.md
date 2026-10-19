@@ -1,10 +1,20 @@
 # InventoryPro
 
-A complete inventory workspace for a Database Systems Lab: React, Vite, Tailwind CSS, Recharts, Java 21, Spring Boot, Spring Security and **Oracle Database through JDBC**. There is no replacement database and no fabricated dashboard data. The combined frontend/backend Docker build is prepared; a public live deployment still needs a remotely hosted Oracle schema.
+## Live Demo & Login
+
+**Website:** https://inventorypro-college-demo.onrender.com/
+
+**Username:** `demo-admin`
+
+**Password:** `HED9BSmjz3YDG8dmXmUiTJ5Z`
+
+The hosted college demo uses **H2 in memory**, so data resets when the free Render service restarts or wakes after an idle period. Render Free may take about a minute to wake. The original project and local application use **Oracle Database through JDBC**; their code, SQL scripts, and documentation remain in this repository. This password belongs only to the disposable public H2 demo. Do not use it for personal or Oracle accounts.
+
+A complete inventory workspace for a Database Systems Lab: React, Vite, Tailwind CSS, Recharts, Java 21, Spring Boot, Spring Security and **Oracle Database through JDBC**. The public H2 demo above is separate from the original Oracle-backed application.
 
 The interface includes a responsive sidebar, light/dark appearance, login, product catalogue, search/filter/sort/pagination, category and supplier directories, atomic stock-in/out operations, movement history, live dashboard, seven reports, CSV exports, admin team-account creation, validation, confirmation dialogs and connection errors.
 
-**Hosted college demo:** [Open InventoryPro](https://inventorypro-college-demo.onrender.com/). It uses resettable H2 data, separate from the Oracle JDBC application documented below. See [H2 demo deployment](docs/DEMO_DEPLOYMENT.md).
+See [H2 demo deployment](docs/DEMO_DEPLOYMENT.md) for its separate configuration and limitations.
 
 ## Repository
 
